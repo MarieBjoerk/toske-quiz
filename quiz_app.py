@@ -6,7 +6,7 @@ from PIL import Image, ImageStat
 
 
 IMAGE_DIR = Path(__file__).parent
-ZOOM_LEVEL = 9.0
+ZOOM_LEVEL = 40.0
 MAX_IMAGE_WIDTH = 620
 MAX_IMAGE_HEIGHT = 330
 MANUAL_CROPS = {
