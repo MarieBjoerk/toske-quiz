@@ -6,7 +6,7 @@ from PIL import Image, ImageStat
 
 
 IMAGE_DIR = Path(__file__).parent
-ZOOM_LEVEL = 11.0
+ZOOM_LEVEL = 9.0
 MAX_IMAGE_WIDTH = 620
 MAX_IMAGE_HEIGHT = 330
 MANUAL_CROPS = {
@@ -36,7 +36,7 @@ QUIZ = [
     {"file": "spand.png", "is_cod": False, "name": "Spand"},
 ]
 
-
+# Funktion der laver zoom-effekt 
 def zoom_image(image: Image.Image, crop_position: tuple[float, float], zoom: float = ZOOM_LEVEL) -> Image.Image:
     width, height = image.size
     crop_width = max(1, int(width / zoom))
@@ -49,12 +49,13 @@ def zoom_image(image: Image.Image, crop_position: tuple[float, float], zoom: flo
     return cropped.resize((width, height))
 
 
+# Sklarere billede ned, så det passer inden for en maksimal bredde og høje, uden at ændre propertionerne 
 def fit_image(image: Image.Image, max_width: int = MAX_IMAGE_WIDTH, max_height: int = MAX_IMAGE_HEIGHT) -> Image.Image:
     image = image.copy()
     image.thumbnail((max_width, max_height))
     return image
 
-
+# Finder det sted i billedet hvor der lysest, så der kan zoomes der 
 def find_light_crop_position(image_path: Path, zoom: float = ZOOM_LEVEL) -> tuple[float, float]:
     image = Image.open(image_path).convert("RGB")
     width, height = image.size
@@ -63,6 +64,8 @@ def find_light_crop_position(image_path: Path, zoom: float = ZOOM_LEVEL) -> tupl
     max_left = max(0, width - crop_width)
     max_top = max(0, height - crop_height)
 
+
+## 1. tester mange crop-områder, giver hver et "score" og væger det bedste område 
     if max_left == 0 or max_top == 0:
         return (0.5, 0.5)
 
