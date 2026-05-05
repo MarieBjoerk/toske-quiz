@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+candidates_*.jpg
+zoom_preview*.jpg
+manual_preview.jpg
+.streamlit/
+
